@@ -1,6 +1,6 @@
 'use strict';
+
 var assign = require('lodash-node/modern/objects/assign');
-// TODO: bring with from IoC container module
 
 function CoreObject(options) {
   assign(this, options);
