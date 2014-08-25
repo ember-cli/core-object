@@ -1,0 +1,22 @@
+{
+  "name": "core_object",
+  "version": "0.0.1",
+  "description": "A lightweight implementation of OOP Class in JavaScript",
+  "main": "core-object.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stefanpenner/core_object.git"
+  },
+  "author": "Ember core team and ember cli contributors",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stefanpenner/core_object/issues"
+  },
+  "homepage": "https://github.com/stefanpenner/core_object",
+  "devDependencies": {
+    "mocha": "^1.21.4"
+  }
+}
