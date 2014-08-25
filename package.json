@@ -4,7 +4,7 @@
   "description": "A lightweight implementation of OOP Class in JavaScript",
   "main": "core-object.js",
   "scripts": {
-    "test": "npm test"
+    "test": "mocha tests/**/*-test.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,8 @@
   "homepage": "https://github.com/stefanpenner/core_object",
   "devDependencies": {
     "mocha": "^1.21.4"
+  },
+  "dependencies": {
+    "lodash-node": "^2.4.1"
   }
 }
