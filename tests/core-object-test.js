@@ -39,6 +39,20 @@ describe('core-object.js', function() {
     assert.equal(called, 'instance.foo');
   });
 
+  it('init is called with the arguments to new', function() {
+    var called = false;
+
+    var Klass = CoreObject.extend({
+      init: function(foo) {
+        called = foo;
+      }
+    });
+
+    var instance = new Klass('foo');
+
+    assert.equal(called, 'foo');
+  });
+
 
   it('an extended class can be extended can be extended with functions to add to the new class', function() {
     var fooCalled = false;

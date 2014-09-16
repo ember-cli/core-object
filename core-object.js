@@ -13,9 +13,14 @@ CoreObject.prototype.constructor = CoreObject;
 CoreObject.extend = function(options) {
   var constructor = this;
   function Class() {
-    constructor.apply(this, arguments);
+    var args = new Array(arguments.length);
+    for (var i = 0, l = args.length; i < l; i++) {
+      args[i] = arguments[i];
+    }
+
+    constructor.apply(this, args);
     if (this.init) {
-      this.init(options);
+      this.init.apply(this, args);
     }
   }
 
