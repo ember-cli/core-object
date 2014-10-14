@@ -78,6 +78,16 @@ describe('core-object.js', function() {
     assert(barCalled);
   });
 
+  it('child classes can be instantiated without new', function() {
+    var called = false;
+
+    var Klass = CoreObject.extend();
+
+    var instance = Klass();
+
+    assert(instance instanceof Klass);
+  });
+
   describe('_super', function() {
     it('an extended class can call methods on its parents constructor via _super.methodName', function() {
       var fooCalled = false;

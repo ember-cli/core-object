@@ -12,12 +12,20 @@ CoreObject.prototype.constructor = CoreObject;
 
 CoreObject.extend = function(options) {
   var constructor = this;
+
   function Class() {
     var args = new Array(arguments.length);
     var i = 0;
     var l = args.length;
     for (; i < l; i++) {
       args[i] = arguments[i];
+    }
+
+    if (!(this instanceof Class)) {
+      var instance = new MissingNew();
+      Class.apply(instance, args);
+
+      return instance;
     }
 
     constructor.apply(this, args);
@@ -32,6 +40,9 @@ CoreObject.extend = function(options) {
   assign(Class.prototype, options);
   Class.prototype.constructor = Class;
   Class.prototype._super = constructor.prototype;
+
+  function MissingNew() {};
+  MissingNew.prototype = Class.prototype;
 
   return Class;
 };
