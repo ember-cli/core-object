@@ -54,7 +54,7 @@ describe('core-object.js', function() {
   });
 
 
-  it('an extended class can be extended can be extended with functions to add to the new class', function() {
+  it('an extended class can be extended with functions to add to the new class', function() {
     var fooCalled = false;
     var barCalled = false;
 
