@@ -14,7 +14,9 @@ CoreObject.extend = function(options) {
   var constructor = this;
   function Class() {
     var args = new Array(arguments.length);
-    for (var i = 0, l = args.length; i < l; i++) {
+    var i = 0;
+    var l = args.length;
+    for (; i < l; i++) {
       args[i] = arguments[i];
     }
 
