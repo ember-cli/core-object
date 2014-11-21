@@ -8,7 +8,6 @@ function CoreObject(options) {
 
 module.exports = CoreObject;
 
-
 CoreObject.extend = function(options) {
   var constructor = this;
 
