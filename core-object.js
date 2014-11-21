@@ -20,7 +20,7 @@ CoreObject.extend = function(options) {
       args[i] = arguments[i];
     }
 
-    constructor.apply(this, args);
+    CoreObject.apply(this, args);
     if (this.init) {
       this.init.apply(this, args);
     }

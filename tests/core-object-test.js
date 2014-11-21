@@ -39,21 +39,6 @@ describe('core-object.js', function() {
     assert.equal(called, 'instance.foo');
   });
 
-  it('init is called with the arguments to new', function() {
-    var called = false;
-
-    var Klass = CoreObject.extend({
-      init: function(foo) {
-        called = foo;
-      }
-    });
-
-    var instance = new Klass('foo');
-
-    assert.equal(called, 'foo');
-  });
-
-
   it('an extended class can be extended with functions to add to the new class', function() {
     var fooCalled = false;
     var barCalled = false;
@@ -76,6 +61,39 @@ describe('core-object.js', function() {
 
     instance.bar();
     assert(barCalled);
+  });
+
+  describe('init', function(){
+
+    it('init is called with the arguments to new', function() {
+      var called = false;
+
+      var Klass = CoreObject.extend({
+        init: function(foo) {
+          called = foo;
+        }
+      });
+
+      var instance = new Klass('foo');
+
+      assert.equal(called, 'foo');
+    });
+
+    it('init is called once when we instantialte a grandchild class', function() {
+      var called = 0;
+
+      var Klass1 = CoreObject.extend({});
+
+      var Klass2 = Klass1.extend({
+        init: function(){
+          called += 1;
+        }
+      });
+
+      var instance = new Klass2();
+
+      assert.equal(called, 1);
+    });
   });
 
   describe('_super', function() {
