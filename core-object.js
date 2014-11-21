@@ -8,10 +8,10 @@ function CoreObject(options) {
 
 module.exports = CoreObject;
 
-CoreObject.prototype.constructor = CoreObject;
 
 CoreObject.extend = function(options) {
   var constructor = this;
+
   function Class() {
     var args = new Array(arguments.length);
     var i = 0;
@@ -20,9 +20,10 @@ CoreObject.extend = function(options) {
       args[i] = arguments[i];
     }
 
-    CoreObject.apply(this, args);
-    if (this.init) {
-      this.init.apply(this, args);
+    var object = this;
+    CoreObject.apply(object, args);
+    if (object.init) {
+      object.init.apply(object, args);
     }
   }
 
@@ -30,9 +31,7 @@ CoreObject.extend = function(options) {
 
   Class.prototype = Object.create(constructor.prototype);
   assign(Class.prototype, options);
-  Class.prototype.constructor = Class;
   Class.prototype._super = constructor.prototype;
 
   return Class;
 };
-
