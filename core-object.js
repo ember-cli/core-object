@@ -13,17 +13,9 @@ CoreObject.extend = function(options) {
   var constructor = this;
 
   function Class() {
-    var args = new Array(arguments.length);
-    var i = 0;
-    var l = args.length;
-    for (; i < l; i++) {
-      args[i] = arguments[i];
-    }
-
-    var object = this;
-    CoreObject.apply(object, args);
-    if (object.init) {
-      object.init.apply(object, args);
+    CoreObject.apply(this, arguments);
+    if (this.init) {
+      this.init.apply(this, arguments);
     }
   }
 
