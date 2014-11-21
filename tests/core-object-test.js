@@ -79,7 +79,7 @@ describe('core-object.js', function() {
       assert.equal(called, 'foo');
     });
 
-    it('init is called once when we instantialte a grandchild class', function() {
+    it('init is called once when we instantiate a grandchild class', function() {
       var called = 0;
 
       var Klass1 = CoreObject.extend({});
