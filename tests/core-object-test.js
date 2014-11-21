@@ -178,5 +178,41 @@ describe('core-object.js', function() {
       assert(fooCalled, 'foo called');
       assert(barCalled, 'bar called');
     });
+
+    it('super chains work', function() {
+      var fooCalled = false;
+      var barCalled = false;
+      var bazCalled = false;
+
+      var Klass1 = CoreObject.extend({
+        id: 1,
+        toString: function() {
+          return 'klass' + this.id;
+        }
+      });
+
+      var Klass2 = Klass1.extend({
+        id: 2,
+        foo: function() {
+          assert(this.id === 3);
+        },
+        toString: function() {
+          assert(this.id === 2);
+          return 'klass' + this.id + '.' + this._super.toString();
+        }
+      });
+
+      var Klass3 = Klass2.extend({
+        id: 3,
+        toString: function() {
+          this.foo();
+          return 'klass' + this.id + '.' + this._super.toString();
+        }
+      });
+
+      var instance = new Klass3();
+
+      assert.equal(instance.toString(), 'klass3.klass2.klass1');
+    });
   });
 });
