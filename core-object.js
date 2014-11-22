@@ -7,7 +7,11 @@ function CoreObject(options) {
 }
 
 CoreObject.prototype.init = function(options) {
-  assign(this, options);
+  if (options) {
+    for (var key in options) {
+      this[key] = options[key];
+    }
+  }
 };
 
 module.exports = CoreObject;
@@ -16,13 +20,16 @@ CoreObject.extend = function(options) {
   var constructor = this;
 
   function Class() {
-    this.init.apply(this, arguments);
+    var length = arguments.length;
+
+    if (length === 0) this.init();
+    else this.init(arguments[0]);
   }
 
   Class.__proto__ = CoreObject;
 
   Class.prototype = Object.create(constructor.prototype);
-  assign(Class.prototype, options);
+  if (options) assign(Class.prototype, options);
   Class.prototype._super = constructor.prototype;
 
   return Class;
