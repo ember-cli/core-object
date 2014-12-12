@@ -34,6 +34,7 @@ describe('core-object.js', function() {
         called = 'instance.foo';
       }
     });
+
     instance.foo();
 
     assert.equal(called, 'instance.foo');
@@ -194,7 +195,7 @@ describe('core-object.js', function() {
       var Klass2 = Klass1.extend({
         id: 2,
         foo: function() {
-          assert(this.id === 3);
+          assert(this.id === 4);
         },
         toString: function() {
           assert(this.id === 2);
@@ -203,7 +204,10 @@ describe('core-object.js', function() {
       });
 
       var Klass3 = Klass2.extend({
-        id: 3,
+        init: function() {
+          this.id = 4; // on the instance
+        },
+        id: 3, // on the prototype
         toString: function() {
           this.foo();
           return 'klass' + this.id + '.' + this._super.toString();
@@ -212,7 +216,7 @@ describe('core-object.js', function() {
 
       var instance = new Klass3();
 
-      assert.equal(instance.toString(), 'klass3.klass2.klass1');
+      assert.equal(instance.toString(), 'klass4.klass2.klass1');
     });
   });
 });

@@ -3,8 +3,12 @@
 var assign = require('lodash-node/modern/objects/assign');
 
 function CoreObject(options) {
-  assign(this, options);
+  this.init(options);
 }
+
+CoreObject.prototype.init = function(options) {
+  assign(this, options);
+};
 
 module.exports = CoreObject;
 
@@ -12,10 +16,7 @@ CoreObject.extend = function(options) {
   var constructor = this;
 
   function Class() {
-    CoreObject.apply(this, arguments);
-    if (this.init) {
-      this.init.apply(this, arguments);
-    }
+    this.init.apply(this, arguments);
   }
 
   Class.__proto__ = CoreObject;
