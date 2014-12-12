@@ -94,6 +94,33 @@ describe('core-object.js', function() {
 
       assert.equal(called, 1);
     });
+
+    it('super chain of inits is called', function() {
+      var called = '';
+
+      var Klass1 = CoreObject.extend({
+        init: function(){
+          called += '1';
+        }
+      });
+
+      var Klass2 = Klass1.extend({
+        init: function(){
+          called += '2';
+        }
+      });
+
+      var Klass3 = Klass2.extend({
+        init: function(){
+          called += '3';
+        }
+      });
+
+      var instance = new Klass3();
+
+      assert.equal(called, '123');
+    });
+
   });
 
   describe('_super', function() {

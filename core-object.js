@@ -12,9 +12,9 @@ CoreObject.extend = function(options) {
   var constructor = this;
 
   function Class() {
-    CoreObject.apply(this, arguments);
-    if (this.init) {
-      this.init.apply(this, arguments);
+    constructor.apply(this, arguments);
+    if (options && options.init) {
+      options.init.apply(this, arguments);
     }
   }
 
