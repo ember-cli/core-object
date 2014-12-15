@@ -31,7 +31,6 @@ CoreObject.extend = function(options) {
 
   Class.prototype = Object.create(constructor.prototype);
   if (options) assignProperties(Class.prototype, options);
-  Class.prototype._super = constructor.prototype;
 
   return Class;
 };
