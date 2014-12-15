@@ -213,20 +213,21 @@ describe('core-object.js', function() {
       var bazCalled = false;
 
       var Klass1 = CoreObject.extend({
-        id: 1,
+        foo: function() {
+          return 'klass1';
+        },
         toString: function() {
-          return 'klass' + this.id;
+          return 'klass1-' + this.id;
         }
       });
 
       var Klass2 = Klass1.extend({
-        id: 2,
         foo: function() {
-          assert(this.id === 4);
+          assert.equal(this.id, 4);
+          return 'klass2,' + this._super();
         },
         toString: function() {
-          assert(this.id === 2);
-          return 'klass' + this.id + '.' + this._super.toString();
+          return 'klass2-' + this.id + '.' + this._super();
         }
       });
 
@@ -234,16 +235,15 @@ describe('core-object.js', function() {
         init: function() {
           this.id = 4; // on the instance
         },
-        id: 3, // on the prototype
         toString: function() {
-          this.foo();
-          return 'klass' + this.id + '.' + this._super.toString();
+          assert.equal(this.foo(), 'klass2,klass1');
+          return 'klass3-' + this.id + '.' + this._super();
         }
       });
 
       var instance = new Klass3();
 
-      assert.equal(instance.toString(), 'klass4.klass2.klass1');
+      assert.equal(instance.toString(), 'klass3-4.klass2-4.klass1-4');
     });
   });
 });
