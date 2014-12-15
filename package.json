@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/stefanpenner/core_object.git"
+    "url": "https://github.com/stefanpenner/core-object.git"
   },
   "author": "Ember core team and ember cli contributors",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/stefanpenner/core_object/issues"
+    "url": "https://github.com/stefanpenner/core-object/issues"
   },
-  "homepage": "https://github.com/stefanpenner/core_object",
+  "homepage": "https://github.com/stefanpenner/core-object",
   "devDependencies": {
     "mocha": "^1.21.4"
   },
