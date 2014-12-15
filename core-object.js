@@ -22,9 +22,9 @@ CoreObject.extend = function(options) {
   function Class() {
     var length = arguments.length;
 
-    if (length === 0) this.init();
+    if (length === 0)      this.init();
     else if (length === 1) this.init(arguments[0]);
-    else this.init.apply(this, arguments);
+    else                   this.init.apply(this, arguments);
   }
 
   Class.__proto__ = CoreObject;
