@@ -5,8 +5,8 @@ module.exports = function setup() {
     };
   } else if (this.distribution === 5) {
     this.data = {
-      firstName:  function() { },
-      lastName:   function() { },
+      firstName:  function() { this._super(); },
+      lastName:   function() { this._super(); },
       middleName: function() { },
       age:        function() { },
       sex:        function() { }
