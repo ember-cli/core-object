@@ -12,7 +12,7 @@ var Person = CoreObject.extend({
     this.middleName = options.middleName;
 
     this.sex = options.sex;
-    this.age = options.age ;
+    this.age = options.age;
   }
 });
 
