@@ -8,6 +8,7 @@ require('./runner')(
       require('./create/uberproto'),
       require('./create/raw'),
       require('./create/esnext'),
+      require('./create/klass'),
     ]
   }
 );
@@ -18,7 +19,8 @@ require('./runner')(
     name: 'extend',
     suites: [
       require('./extend/core'),
-      require('./extend/uberproto')
+      require('./extend/uberproto'),
+      require('./create/klass'),
     ]
   }
 );
