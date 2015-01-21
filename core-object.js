@@ -1,10 +1,18 @@
 'use strict';
 
-var assign = require('lodash-node/modern/objects/assign');
+var assignProperties = require('./lib/assign-properties');
 
 function CoreObject(options) {
-  assign(this, options);
+  this.init(options);
 }
+
+CoreObject.prototype.init = function(options) {
+  if (options) {
+    for (var key in options) {
+      this[key] = options[key];
+    }
+  }
+};
 
 module.exports = CoreObject;
 
@@ -12,17 +20,17 @@ CoreObject.extend = function(options) {
   var constructor = this;
 
   function Class() {
-    constructor.apply(this, arguments);
-    if (options && options.init) {
-      options.init.apply(this, arguments);
-    }
+    var length = arguments.length;
+
+    if (length === 0)      this.init();
+    else if (length === 1) this.init(arguments[0]);
+    else                   this.init.apply(this, arguments);
   }
 
   Class.__proto__ = CoreObject;
 
   Class.prototype = Object.create(constructor.prototype);
-  assign(Class.prototype, options);
-  Class.prototype._super = constructor.prototype;
+  if (options) assignProperties(Class.prototype, options);
 
   return Class;
 };
