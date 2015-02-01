@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/ember-cli/core-object",
   "devDependencies": {
+    "backbone-metal": "^0.3.0",
     "benchmark": "^1.0.0",
     "browserify": "^6.3.2",
     "klass": "^1.4.0",

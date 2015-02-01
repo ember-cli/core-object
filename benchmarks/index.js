@@ -9,6 +9,7 @@ require('./runner')(
       require('./create/raw'),
       require('./create/esnext'),
       require('./create/klass'),
+      require('./create/backbone-metal'),
     ]
   }
 );
@@ -20,7 +21,8 @@ require('./runner')(
     suites: [
       require('./extend/core'),
       require('./extend/uberproto'),
-      require('./create/klass'),
+      require('./extend/klass'),
+      require('./extend/backbone-metal'),
     ]
   }
 );
