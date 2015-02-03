@@ -74,12 +74,15 @@ describe('assignProperties', function() {
 
   describe('super.methodName', function() {
     it('supported with deprecation notice', function() {
-      var prev = console.warn;
+      var prevWarn = console.warn;
+      var prevEnv = process.env.CORE_OBJECT_WARN_DEPRECATED;
       var warning;
 
       console.warn = function(msg) {
         warning = msg;
       }
+
+      process.env.CORE_OBJECT_WARN_DEPRECATED = true;
 
       var target = {
         a: function() {
@@ -100,7 +103,8 @@ describe('assignProperties', function() {
         'DEPRECATION: Calling this._super.a is deprecated. ' +
         'Please use this._super(args).');
 
-      console.warn = prev;
+      console.warn = prevWarn;
+      process.env.CORE_OBJECT_WARN_DEPRECATED = prevEnv;
     });
   });
 });
