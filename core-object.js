@@ -14,8 +14,6 @@ CoreObject.prototype.init = function(options) {
   }
 };
 
-module.exports = CoreObject;
-
 CoreObject.extend = function(options) {
   var constructor = this;
 
@@ -34,3 +32,8 @@ CoreObject.extend = function(options) {
 
   return Class;
 };
+
+/* global define:true module:true window: true */
+if (typeof define === 'function' && define['amd'])      { define(function() { return CoreObject; }); } 
+if (typeof module !== 'undefined' && module['exports']) { module['exports'] = CoreObject; } 
+if (typeof window !== 'undefined')                      { window['CoreObject'] = CoreObject; }
