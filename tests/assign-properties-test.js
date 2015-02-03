@@ -71,4 +71,36 @@ describe('assignProperties', function() {
       assert.equal(target.a(), 6);
     });
   });
+
+  describe('super.methodName', function() {
+    it('supported with deprecation notice', function() {
+      var prev = console.warn;
+      var warning;
+
+      console.warn = function(msg) {
+        warning = msg;
+      }
+
+      var target = {
+        a: function() {
+          return 1;
+        }
+      };
+
+      var input = {
+        a: function() {
+          return this._super.a.apply(this) + 5;
+        }
+      };
+
+      assignProperties(target, input);
+
+      assert.equal(target.a(), 6);
+      assert.equal(warning,
+        'DEPRECATION: Calling this._super.a is deprecated. ' +
+        'Please use this._super(args).');
+
+      console.warn = prev;
+    });
+  });
 });
