@@ -2,7 +2,14 @@
 
 var assignProperties = require('./lib/assign-properties');
 
+function needsNew() {
+  throw new TypeError("Failed to construct: Please use the 'new' operator, this object constructor cannot be called as a function.");
+}
+
 function CoreObject(options) {
+  if (!(this instanceof CoreObject)) {
+    needsNew()
+  }
   this.init(options);
 }
 
