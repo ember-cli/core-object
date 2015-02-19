@@ -5,6 +5,7 @@
   "main": "core-object.js",
   "scripts": {
     "test": "mocha tests/**/*-test.js",
+    "test:debug": "mocha debug tests/**/*-test.js",
     "build:browser": "browserify core-object.js -o browser.js",
     "bench:browser": "browserify benchmarks/index.js -o tmp/bench.js",
     "bench:node": "node benchmarks/index"
