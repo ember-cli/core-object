@@ -23,7 +23,11 @@ CoreObject.prototype.init = function(options) {
 };
 
 CoreObject.extend = function(options) {
-  var methodBag;
+  var superclass = this,
+      instanceMixin,
+      protoMixin,
+      methods;
+
   function Class() {
     var length = arguments.length;
     var protoMixin = Class.__protoMixin__;
@@ -42,26 +46,33 @@ CoreObject.extend = function(options) {
     else                   this.init.apply(this, arguments);
   }
 
-  Class.superClass = this;
-  Class.__protoMixin__ = new Mixin(Class.superClass.__protoMixin__);
+
+  Class.superclass = superclass;
+
+  Class.__protoMixin__ = new Mixin(superclass.__protoMixin__);
   Class.__instanceMixin__ = {};
   Class.__proto__ = CoreObject;
-  methodBag = {};
+  protoMixin = Class.__protoMixin__;
+  instanceMixin = Class.__instanceMixin__;
+
+  methods = {};
   
   for (var key in options) {
     var value = options[key];
-    if (typeof value === 'function') {
-      methodBag[key] = value;
-    } else {
-      Class.__instanceMixin__[key] = value;
+    if(options.hasOwnProperty(key)) {
+      if (typeof value === 'function') {
+        methods[key] = value;
+      } else {
+        instanceMixin[key] = value;
+      }
     }
   }
 
-  Class.__protoMixin__.add(methodBag);
+  protoMixin.add(methods);
   Class.wasApplied = false;
 
   // Create the prototype
-  Class.prototype = Object.create(Class.superClass.prototype);
+  Class.prototype = Object.create(superclass.prototype);
 
   return Class;
 };

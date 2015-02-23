@@ -5,10 +5,9 @@ var arrSlice = [].slice;
 function hasSuper(fn) {
   if (fn.__hasSuper === undefined) {
     fn.__hasSuper = fn.toString().indexOf('_super') > -1;
-    return fn.__hasSuper;
-  } else {
-    return fn.__hasSuper;
   }
+
+  return fn.__hasSuper;
 }
 
 function superWrap(mixin, name, fn) {
@@ -30,12 +29,11 @@ function superWrap(mixin, name, fn) {
 function Mixin() {
   var length = arguments.length;
 
-  this.mixins = [];
-
   if (length === 1 && !(arguments[0] instanceof Mixin)) {
     this.properties = arguments[0];
     this.mixins = undefined;
   } else if (length >= 1) {
+    this.mixins = [];
     for (var i = 0; i < length; i++) {
       var x = arguments[i];
       if (x instanceof Mixin) {
