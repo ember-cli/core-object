@@ -36,11 +36,11 @@ CoreObject.extend = function(options) {
     var instanceMixin = constructor.__instanceMixin__;
 
     if (!constructor.wasApplied) {
-      protoMixin.apply(this);
+      protoMixin.apply(constructor.prototype);
 
       for (var key in instanceMixin) {
         var value = instanceMixin[key];
-        this[key] = value;
+        constructor.prototype[key] = value;
       }
 
       constructor.wasApplied = true;
