@@ -1,6 +1,5 @@
 'use strict';
 
-var assignProperties = require('./lib/assign-properties');
 var Mixin = require('./mixin').Mixin;
 
 function needsNew() {

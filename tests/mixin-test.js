@@ -8,6 +8,17 @@ var assert = require('assert');
 
 describe('mixin', function() {
 
+  it('should handle noop', function() {
+    var mixin1 = new Mixin();
+    assert.equal(mixin1.methods, undefined);
+    assert.equal(mixin1.properties, undefined);
+  });
+
+  it('supports properties that do not conflict', function() {
+    var mixin1 = new Mixin({ a: 1, b: 2, c: []});
+    assert.deepEqual(mixin1.properties, { a: 1, b: 2, c: []});
+  });
+
   describe('creation', function() {
     it('should place pojos on properties', function() {
 
@@ -142,6 +153,21 @@ describe('mixin', function() {
 
       mixin(obj, fMixin);
       assert.equal(obj.method(), 'objf');
+    });
+
+    it('should support super with no root', function() {
+      var aMixin = new Mixin({
+        method: function() {
+          this._super();
+          return 'a';
+        }
+      });
+
+      var obj = {};
+      mixin(obj, aMixin);
+
+      assert.equal(obj.method(), 'a');
+
     });
   });
 });

@@ -1,7 +1,6 @@
 'use strict';
 var arrSlice = [].slice;
 
-
 function hasSuper(fn) {
   if (fn.__hasSuper === undefined) {
     fn.__hasSuper = fn.toString().indexOf('_super') > -1;
