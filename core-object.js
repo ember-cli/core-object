@@ -14,6 +14,8 @@ function CoreObject(options) {
   this.init(options);
 }
 
+CoreObject.prototype.constructor = CoreObject;
+
 CoreObject.prototype.init = function(options) {
   if (options) {
     for (var key in options) {
@@ -30,22 +32,25 @@ CoreObject.extend = function(options) {
 
   function Class() {
     var length = arguments.length;
-    var protoMixin = Class.__protoMixin__;
-    var instanceMixin = Class.__instanceMixin__;
-    Class.wasApplied = true;
+    var constructor = this.constructor;
+    var protoMixin = constructor.__protoMixin__;
+    var instanceMixin = constructor.__instanceMixin__;
 
-    protoMixin.apply(this);
+    if (!constructor.wasApplied) {
+      protoMixin.apply(this);
 
-    for (var key in instanceMixin) {
-      var value = instanceMixin[key];
-      this[key] = value;
+      for (var key in instanceMixin) {
+        var value = instanceMixin[key];
+        this[key] = value;
+      }
+
+      constructor.wasApplied = true;
     }
 
     if (length === 0)      this.init();
     else if (length === 1) this.init(arguments[0]);
     else                   this.init.apply(this, arguments);
   }
-
 
   Class.superclass = superclass;
 
@@ -56,7 +61,7 @@ CoreObject.extend = function(options) {
   instanceMixin = Class.__instanceMixin__;
 
   methods = {};
-  
+
   for (var key in options) {
     var value = options[key];
     if(options.hasOwnProperty(key)) {
@@ -73,6 +78,7 @@ CoreObject.extend = function(options) {
 
   // Create the prototype
   Class.prototype = Object.create(superclass.prototype);
+  Class.prototype.constructor = Class;
 
   return Class;
 };
@@ -86,6 +92,6 @@ CoreObject.reopen = function(options) {
 };
 
 /* global define:true module:true window: true */
-if (typeof define === 'function' && define['amd'])      { define(function() { return CoreObject; }); } 
-if (typeof module !== 'undefined' && module['exports']) { module['exports'] = CoreObject; } 
+if (typeof define === 'function' && define['amd'])      { define(function() { return CoreObject; }); }
+if (typeof module !== 'undefined' && module['exports']) { module['exports'] = CoreObject; }
 if (typeof window !== 'undefined')                      { window['CoreObject'] = CoreObject; }
