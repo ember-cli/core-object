@@ -2,13 +2,37 @@
 
 var Mixin = require('./mixin').Mixin;
 
+function makeCtor() {
+  return function() {
+    var length = arguments.length,
+        constructor = this.constructor,
+        protoMixin = constructor.__protoMixin__,
+        instanceMixin = constructor.__instanceMixin__;
+
+    if (!constructor.wasApplied) {
+      protoMixin.apply(constructor.prototype);
+
+      for (var key in instanceMixin) {
+        var value = instanceMixin[key];
+        constructor.prototype[key] = value;
+      }
+
+      constructor.wasApplied = true;
+    }
+
+    if (length === 0)      this.init();
+    else if (length === 1) this.init(arguments[0]);
+    else                   this.init.apply(this, arguments);
+  };
+}
+
 function needsNew() {
   throw new TypeError("Failed to construct: Please use the 'new' operator, this object constructor cannot be called as a function.");
 }
 
 function CoreObject(options) {
   if (!(this instanceof CoreObject)) {
-    needsNew()
+    needsNew();
   }
   this.init(options);
 }
@@ -25,41 +49,17 @@ CoreObject.prototype.init = function(options) {
 
 CoreObject.extend = function(options) {
   var superclass = this,
+      Class = makeCtor(),
+      methods = {},
       instanceMixin,
-      protoMixin,
-      methods;
-
-  function Class() {
-    var length = arguments.length;
-    var constructor = this.constructor;
-    var protoMixin = constructor.__protoMixin__;
-    var instanceMixin = constructor.__instanceMixin__;
-
-    if (!constructor.wasApplied) {
-      protoMixin.apply(constructor.prototype);
-
-      for (var key in instanceMixin) {
-        var value = instanceMixin[key];
-        constructor.prototype[key] = value;
-      }
-
-      constructor.wasApplied = true;
-    }
-
-    if (length === 0)      this.init();
-    else if (length === 1) this.init(arguments[0]);
-    else                   this.init.apply(this, arguments);
-  }
+      protoMixin;
 
   Class.superclass = superclass;
-
   Class.__protoMixin__ = new Mixin(superclass.__protoMixin__);
   Class.__instanceMixin__ = {};
   Class.__proto__ = CoreObject;
   protoMixin = Class.__protoMixin__;
   instanceMixin = Class.__instanceMixin__;
-
-  methods = {};
 
   for (var key in options) {
     var value = options[key];
