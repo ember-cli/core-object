@@ -4,7 +4,7 @@ var CoreObject = require('../core-object');
 var assert     = require('assert');
 
 describe('core-object.js', function() {
-  it.only('errors if new is not used', function() {
+  it('errors if new is not used', function() {
     assert.throws(function() {
       CoreObject();
     }, /Failed to construct: Please use the 'new' operator, this object constructor cannot be called as a function./);

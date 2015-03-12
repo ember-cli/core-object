@@ -6,6 +6,8 @@
   "scripts": {
     "test": "mocha tests/**/*-test.js",
     "test:debug": "mocha debug tests/**/*-test.js",
+    "test:auto": "mocha --watch tests/**/*-test.js",
+    "test:browser": "testem",
     "build:browser": "browserify core-object.js -o browser.js",
     "bench:browser": "browserify benchmarks/index.js -o tmp/bench.js",
     "bench:node": "node benchmarks/index"
@@ -27,6 +29,7 @@
     "klass": "^1.4.0",
     "microtime": "^1.0.1",
     "mocha": "^1.21.4",
+    "testem": "^0.6.38",
     "traceur-runtime": "0.0.59",
     "uberproto": "^1.1.2"
   }
