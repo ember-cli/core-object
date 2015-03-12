@@ -1,13 +1,24 @@
 'use strict';
-var arrSlice = [].slice;
+var hasSuper;
+var sourceAvailable = (function() {
+  return this;
+}).toString().indexOf('return this;') > -1;
 
-function hasSuper(fn) {
-  if (fn.__hasSuper === undefined) {
-    fn.__hasSuper = fn.toString().indexOf('_super') > -1;
-  }
+if (sourceAvailable) {
+  hasSuper = function(fn) {
+    if (fn.__hasSuper === undefined) {
+      fn.__hasSuper = fn.toString().indexOf('_super') > -1;
+    }
 
-  return fn.__hasSuper;
+    return fn.__hasSuper;
+  };
+} else {
+  hasSuper = function(target, fn) {
+    return true;
+  };
 }
+
+
 
 function superWrap(mixin, name, fn) {
   var superFn = mixin[name];
@@ -101,7 +112,10 @@ function assign(mixins, target) {
 }
 
 function mixin(obj) {
-  var mixins = arrSlice.call(arguments, 1);
+  var mixins = [];
+  for (var i = 1; i < arguments.length; i++) {
+    mixins.push(arguments[i]);
+  }
   return assign(mixins, obj);
 }
 
