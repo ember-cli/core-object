@@ -35,7 +35,13 @@ CoreObject.extend = function(options) {
   Class.__proto__ = CoreObject;
 
   Class.prototype = Object.create(constructor.prototype);
-  if (options) assignProperties(Class.prototype, options);
+
+  if (options) {
+    if (shouldCallSuper(options.init)) {
+      options.init = forceSuper(options.init);
+    }
+    assignProperties(Class.prototype, options);
+  }
 
   return Class;
 };
@@ -44,3 +50,25 @@ CoreObject.extend = function(options) {
 if (typeof define === 'function' && define['amd'])      { define(function() { return CoreObject; }); } 
 if (typeof module !== 'undefined' && module['exports']) { module['exports'] = CoreObject; } 
 if (typeof window !== 'undefined')                      { window['CoreObject'] = CoreObject; }
+
+function shouldCallSuper(fn) {
+  // No function, no problem
+  if (!fn) { return false; }
+
+  // Takes arguments, assume disruptive override
+  if (/^function *\( *[^ )]/.test(fn)) { return false; }
+
+  // Calls super already, good to go
+  if (/this\._super\(/.test(fn)) { return false; }
+  if (/this\._super\.call\(/.test(fn)) { return false; }
+  if (/this\._super\.apply\(/.test(fn)) { return false; }
+
+  return true;
+}
+
+function forceSuper(fn) {
+  return function() {
+    this._super.apply(this, arguments);
+    fn.apply(this, arguments);
+  }
+}
