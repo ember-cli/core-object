@@ -1,6 +1,7 @@
 'use strict';
 
 var assignProperties = require('./lib/assign-properties');
+var deprecation = require('./lib/deprecation');
 
 function needsNew() {
   throw new TypeError("Failed to construct: Please use the 'new' operator, this object constructor cannot be called as a function.");
@@ -38,6 +39,10 @@ CoreObject.extend = function(options) {
 
   if (options) {
     if (shouldCallSuper(options.init)) {
+      deprecation(
+        'Overriding init without calling this._super is deprecated. ' +
+        'Please call this._super.apply(this, arguments).'
+      );
       options.init = forceSuper(options.init);
     }
     assignProperties(Class.prototype, options);
