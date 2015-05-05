@@ -99,12 +99,18 @@ describe('assignProperties', function() {
       assignProperties(target, input);
 
       assert.equal(target.a(), 6);
-      assert.equal(warning,
-        'DEPRECATION: Calling this._super.a is deprecated. ' +
-        'Please use this._super(args).');
+      assert.ok(warning.indexOf('Calling this._super.a is deprecated.') !== -1);
 
       console.warn = prevWarn;
-      process.env.CORE_OBJECT_WARN_DEPRECATED = prevEnv;
+
+      // Assignments in process.env get stringified so we have
+      // to be careful not to inadvertently assign the string
+      // 'undefined' or 'null'.
+      if (prevEnv) {
+        process.env.CORE_OBJECT_WARN_DEPRECATED = prevEnv;
+      } else {
+        delete process.env.CORE_OBJECT_WARN_DEPRECATED;
+      }
     });
   });
 });

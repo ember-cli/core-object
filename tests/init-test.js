@@ -33,4 +33,38 @@ describe('init', function() {
 
     assert.equal(called, 1);
   });
+
+  it('is called if the subclass takes no arguments and fails to call _super', function() {
+    var Klass = CoreObject.extend({
+      init: function() {}
+    });
+
+    var instance = new Klass({ foo: 'bar' });
+
+    assert.equal(instance.foo, 'bar');
+  });
+
+  it('is called if the subclass takes no arguments and fails to call _super (whacky whitespace version)', function() {
+    var Klass = CoreObject.extend({
+      init: function (  ) {}
+    });
+
+    var instance = new Klass({ foo: 'bar' });
+
+    assert.equal(instance.foo, 'bar');
+  });
+
+  it('is not called if the subclass takes arguments', function() {
+    var Klass = CoreObject.extend({
+      init: function(data) {
+        this.data = data;
+      }
+    });
+
+    var stooge = { foo: 'bar' };
+    var instance = new Klass(stooge);
+
+    assert.equal(instance.data, stooge);
+    assert.equal(instance.foo, undefined);
+  });
 });

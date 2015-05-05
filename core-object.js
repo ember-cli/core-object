@@ -1,6 +1,7 @@
 'use strict';
 
 var assignProperties = require('./lib/assign-properties');
+var deprecation = require('./lib/deprecation');
 
 function needsNew() {
   throw new TypeError("Failed to construct: Please use the 'new' operator, this object constructor cannot be called as a function.");
@@ -35,7 +36,17 @@ CoreObject.extend = function(options) {
   Class.__proto__ = CoreObject;
 
   Class.prototype = Object.create(constructor.prototype);
-  if (options) assignProperties(Class.prototype, options);
+
+  if (options) {
+    if (shouldCallSuper(options.init)) {
+      deprecation(
+        'Overriding init without calling this._super is deprecated. ' +
+        'Please call this._super.apply(this, arguments).'
+      );
+      options.init = forceSuper(options.init);
+    }
+    assignProperties(Class.prototype, options);
+  }
 
   return Class;
 };
@@ -44,3 +55,25 @@ CoreObject.extend = function(options) {
 if (typeof define === 'function' && define['amd'])      { define(function() { return CoreObject; }); } 
 if (typeof module !== 'undefined' && module['exports']) { module['exports'] = CoreObject; } 
 if (typeof window !== 'undefined')                      { window['CoreObject'] = CoreObject; }
+
+function shouldCallSuper(fn) {
+  // No function, no problem
+  if (!fn) { return false; }
+
+  // Takes arguments, assume disruptive override
+  if (/^function *\( *[^ )]/.test(fn)) { return false; }
+
+  // Calls super already, good to go
+  if (/this\._super\(/.test(fn)) { return false; }
+  if (/this\._super\.call\(/.test(fn)) { return false; }
+  if (/this\._super\.apply\(/.test(fn)) { return false; }
+
+  return true;
+}
+
+function forceSuper(fn) {
+  return function() {
+    this._super.apply(this, arguments);
+    fn.apply(this, arguments);
+  }
+}
