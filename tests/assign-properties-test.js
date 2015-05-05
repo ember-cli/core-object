@@ -99,9 +99,7 @@ describe('assignProperties', function() {
       assignProperties(target, input);
 
       assert.equal(target.a(), 6);
-      assert.equal(warning,
-        'DEPRECATION: Calling this._super.a is deprecated. ' +
-        'Please use this._super(args).');
+      assert.ok(warning.indexOf('Calling this._super.a is deprecated.') !== -1);
 
       console.warn = prevWarn;
 
