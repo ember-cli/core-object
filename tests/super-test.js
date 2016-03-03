@@ -38,21 +38,21 @@ describe('_super', function() {
 
     var Klass1 = CoreObject.extend({
       init: function(){
-        this._super.init();
+        this._super.init.call(this);
         called += '1';
       }
     });
 
     var Klass2 = Klass1.extend({
       init: function(){
-        this._super.init();
+        this._super.init.call(this);
         called += '2';
       }
     });
 
     var Klass3 = Klass2.extend({
       init: function(){
-        this._super.init();
+        this._super.init.call(this);
         called += '3';
       }
     });

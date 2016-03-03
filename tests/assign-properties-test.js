@@ -67,38 +67,5 @@ describe('assignProperties', function() {
       assignProperties(target, input);
       assert.equal(target.a(), 5);
     });
-
-    it('function with super with root', function() {
-      var target = {
-        a: function() {
-          return 1;
-        }
-      };
-      var input = {
-        a: function() {
-          return this._super() + 5;
-        }
-      };
-
-      assignProperties(target, input);
-      assert.equal(target.a(), 6);
-    });
-
-
-    it('function with super with root', function() {
-      var target = {
-        a: function() {
-          return 1;
-        }
-      };
-      var input = {
-        a: function() {
-          return this._super.a() + 5;
-        }
-      };
-
-      assignProperties(target, input);
-      assert.equal(target.a(), 6);
-    });
   });
 });
