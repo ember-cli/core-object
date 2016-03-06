@@ -55,62 +55,17 @@ describe('assignProperties', function() {
       assert.equal(target.a(), 5);
     });
 
-    it('function with super with root', function() {
-      var target = {
-        a: function() {
-          return 1;
-        }
-      };
+    it('function with super.a but no root', function() {
+      var target = { };
       var input = {
         a: function() {
-          return this._super() + 5;
+          this._super.a();
+          return 5;
         }
       };
 
       assignProperties(target, input);
-      assert.equal(target.a(), 6);
-    });
-  });
-
-  describe('super.methodName', function() {
-    it('supported with deprecation notice', function() {
-      var prevWarn = console.warn;
-      var prevEnv = process.env.CORE_OBJECT_WARN_DEPRECATED;
-      var warning;
-
-      console.warn = function(msg) {
-        warning = msg;
-      }
-
-      process.env.CORE_OBJECT_WARN_DEPRECATED = true;
-
-      var target = {
-        a: function() {
-          return 1;
-        }
-      };
-
-      var input = {
-        a: function() {
-          return this._super.a.apply(this) + 5;
-        }
-      };
-
-      assignProperties(target, input);
-
-      assert.equal(target.a(), 6);
-      assert.ok(warning.indexOf('Calling this._super.a is deprecated.') !== -1);
-
-      console.warn = prevWarn;
-
-      // Assignments in process.env get stringified so we have
-      // to be careful not to inadvertently assign the string
-      // 'undefined' or 'null'.
-      if (prevEnv) {
-        process.env.CORE_OBJECT_WARN_DEPRECATED = prevEnv;
-      } else {
-        delete process.env.CORE_OBJECT_WARN_DEPRECATED;
-      }
+      assert.equal(target.a(), 5);
     });
   });
 });

@@ -52,8 +52,8 @@ CoreObject.extend = function(options) {
 };
 
 /* global define:true module:true window: true */
-if (typeof define === 'function' && define['amd'])      { define(function() { return CoreObject; }); } 
-if (typeof module !== 'undefined' && module['exports']) { module['exports'] = CoreObject; } 
+if (typeof define === 'function' && define['amd'])      { define(function() { return CoreObject; }); }
+if (typeof module !== 'undefined' && module['exports']) { module['exports'] = CoreObject; }
 if (typeof window !== 'undefined')                      { window['CoreObject'] = CoreObject; }
 
 function shouldCallSuper(fn) {
@@ -65,8 +65,7 @@ function shouldCallSuper(fn) {
 
   // Calls super already, good to go
   if (/this\._super\(/.test(fn)) { return false; }
-  if (/this\._super\.call\(/.test(fn)) { return false; }
-  if (/this\._super\.apply\(/.test(fn)) { return false; }
+  if (/this\._super\./.test(fn)) { return false; }
 
   return true;
 }
