@@ -24,7 +24,7 @@ describe('init', function() {
     var Klass1 = CoreObject.extend({ });
 
     var Klass2 = Klass1.extend({
-      init: function(){
+      init: function() {
         called += 1;
       }
     });
@@ -36,7 +36,7 @@ describe('init', function() {
 
   it('is called if the subclass takes no arguments and fails to call _super', function() {
     var Klass = CoreObject.extend({
-      init: function() {}
+      init: function() { }
     });
 
     var instance = new Klass({ foo: 'bar' });
@@ -46,7 +46,7 @@ describe('init', function() {
 
   it('is called if the subclass takes no arguments and fails to call _super (whacky whitespace version)', function() {
     var Klass = CoreObject.extend({
-      init: function (  ) {}
+      init: function( ) { }
     });
 
     var instance = new Klass({ foo: 'bar' });
