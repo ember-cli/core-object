@@ -8,21 +8,21 @@ describe('_super', function() {
     var called = '';
 
     var Klass1 = CoreObject.extend({
-      init: function(){
+      init: function() {
         this._super();
         called += '1';
       }
     });
 
     var Klass2 = Klass1.extend({
-      init: function(){
+      init: function() {
         this._super();
         called += '2';
       }
     });
 
     var Klass3 = Klass2.extend({
-      init: function(){
+      init: function() {
         this._super();
         called += '3';
       }
@@ -37,21 +37,21 @@ describe('_super', function() {
     var called = '';
 
     var Klass1 = CoreObject.extend({
-      init: function(){
+      init: function() {
         this._super.init.call(this);
         called += '1';
       }
     });
 
     var Klass2 = Klass1.extend({
-      init: function(){
+      init: function() {
         this._super.init.call(this);
         called += '2';
       }
     });
 
     var Klass3 = Klass2.extend({
-      init: function(){
+      init: function() {
         this._super.init.call(this);
         called += '3';
       }
@@ -66,21 +66,21 @@ describe('_super', function() {
     var called = '';
 
     var Klass1 = CoreObject.extend({
-      init: function(){
+      init: function() {
         called += '1';
         this._super();
       }
     });
 
     var Klass2 = Klass1.extend({
-      init: function(){
+      init: function() {
         called += '2';
         this._super();
       }
     });
 
     var Klass3 = Klass2.extend({
-      init: function(){
+      init: function() {
         called += '3';
         this._super();
       }
@@ -133,7 +133,6 @@ describe('_super', function() {
     assert.equal(instance.toString(), 'klass3-4.klass2-4.klass1-4');
   });
 
-
   it('one super. change calling another works (foo & toString)', function() {
     var fooCalled = false;
     var barCalled = false;
@@ -175,5 +174,82 @@ describe('_super', function() {
     var instance = new Klass3();
 
     assert.equal(instance.toString(), 'klass3-4.klass2-4.klass1-4');
+  });
+
+  describe('forceSuper', function() {
+    it('forces super if forgotten', function() {
+      var wasCalled =  false;
+      var Klass1 = CoreObject.extend({
+        init: function() {
+          this._super();
+          wasCalled = true;
+        },
+      });
+
+      var Klass2 = Klass1.extend({
+        init: function() {
+
+        }
+      });
+
+      assert.equal(wasCalled, false, 'expected init to not yet be called');
+
+      new Klass2();
+
+      assert.equal(wasCalled, true, 'expected init to be called');
+    });
+
+    it('forces super if forgotten (args)', function() {
+      var wasCalled =  false;
+      var wasCalledWith;
+
+      var Klass1 = CoreObject.extend({
+        init: function() {
+          this._super();
+          wasCalled = true;
+          wasCalledWith = Array.prototype.slice.call(arguments);
+        },
+      });
+
+      var Klass2 = Klass1.extend({
+        init: function() {
+
+        }
+      });
+
+      assert.equal(wasCalled, false, 'expected init to not yet be called');
+
+      new Klass2(1,2,3);
+
+      assert.equal(wasCalled, true, 'expected init to be called');
+      assert.deepEqual(wasCalledWith, [1,2,3]);
+    });
+
+
+    it('forces super if forgotten (args but with arity)', function() {
+      var wasCalled =  false;
+      var wasCalledWith;
+
+      var Klass1 = CoreObject.extend({
+        init: function() {
+          this._super();
+          wasCalled = true;
+          wasCalledWith = Array.prototype.slice.call(arguments);
+        },
+      });
+
+      var Klass2 = Klass1.extend({
+        init: function(a) {
+
+        }
+      });
+
+      assert.equal(wasCalled, false, 'expected init to not yet be called');
+
+      new Klass2(1,2,3);
+
+      assert.equal(wasCalled, true, 'expected init to be called');
+      assert.deepEqual(wasCalledWith, []);
+    });
   });
 });

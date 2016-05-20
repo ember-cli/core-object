@@ -33,7 +33,7 @@ describe('assignProperties', function() {
   describe('super', function() {
     it('normal function', function() {
       var target = { };
-      var input = { a: function() { } }
+      var input = { a: function() { } };
 
       assignProperties(target, input);
       assert.deepEqual(target, input);

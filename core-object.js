@@ -39,17 +39,31 @@ CoreObject.extend = function(options) {
 
   if (options) {
     if (shouldCallSuper(options.init)) {
-      deprecation(
-        'Overriding init without calling this._super is deprecated. ' +
-        'Please call this._super.apply(this, arguments).'
-      );
-      options.init = forceSuper(options.init);
+
+      if (hasArgs(options.init)) {
+        deprecation(
+          'Overriding init without calling this._super is deprecated. ' +
+            'Please call this._super() ' + [options.name].filter(Boolean)
+        );
+        options.init = forceSuperWithoutApply(options.init);
+      } else {
+        deprecation(
+          'Overriding init without calling this._super is deprecated. ' +
+            'Please call this._super.apply(this, arguments) ' +  [options.name].filter(Boolean)
+        );
+        options.init = forceSuper(options.init);
+      }
     }
     assignProperties(Class.prototype, options);
   }
 
   return Class;
 };
+
+function hasArgs(fn) {
+  // Takes arguments, assume disruptive override
+  return /^function *\( *[^ )]/.test(fn);
+}
 
 /* global define:true module:true window: true */
 if (typeof define === 'function' && define['amd'])      { define(function() { return CoreObject; }); }
@@ -59,9 +73,6 @@ if (typeof window !== 'undefined')                      { window['CoreObject'] =
 function shouldCallSuper(fn) {
   // No function, no problem
   if (!fn) { return false; }
-
-  // Takes arguments, assume disruptive override
-  if (/^function *\( *[^ )]/.test(fn)) { return false; }
 
   // Calls super already, good to go
   if (/this\._super\(/.test(fn)) { return false; }
@@ -73,6 +84,13 @@ function shouldCallSuper(fn) {
 function forceSuper(fn) {
   return function() {
     this._super.apply(this, arguments);
+    fn.apply(this, arguments);
+  }
+}
+
+function forceSuperWithoutApply(fn) {
+  return function() {
+    this._super.call(this);
     fn.apply(this, arguments);
   }
 }
