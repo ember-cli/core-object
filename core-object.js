@@ -43,13 +43,13 @@ CoreObject.extend = function(options) {
       if (hasArgs(options.init)) {
         deprecation(
           'Overriding init without calling this._super is deprecated. ' +
-            'Please call this._super().'
+            'Please call this._super() ' + [options.name].filter(Boolean)
         );
         options.init = forceSuperWithoutApply(options.init);
       } else {
         deprecation(
           'Overriding init without calling this._super is deprecated. ' +
-            'Please call this._super.apply(this, arguments).'
+            'Please call this._super.apply(this, arguments) ' +  [options.name].filter(Boolean)
         );
         options.init = forceSuper(options.init);
       }
