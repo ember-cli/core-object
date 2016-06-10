@@ -1,6 +1,6 @@
 {
   "name": "core-object",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A lightweight implementation of OOP Class in JavaScript",
   "main": "core-object.js",
   "scripts": {
