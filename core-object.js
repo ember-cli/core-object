@@ -47,9 +47,13 @@ CoreObject.extend = function(options) {
         );
         options.init = forceSuperWithoutApply(options.init);
       } else {
+
+        // this._super.init && is to make sure that the deprecation message
+        // works for people who are writing addons supporting before 2.6.
         deprecation(
           'Overriding init without calling this._super is deprecated. ' +
-            'Please call this._super.apply(this, arguments) ' +  [options.name].filter(Boolean)
+            'Please call `this._super.init && this._super.init.apply(this, arguments);` ' +
+            [options.name].filter(Boolean)
         );
         options.init = forceSuper(options.init);
       }
