@@ -42,8 +42,10 @@ CoreObject.extend = function(options) {
 
       if (hasArgs(options.init)) {
         deprecation(
-          'Overriding init without calling this._super is deprecated. ' +
-            'Please call this._super(), addon: `' + options.name + '`'
+          'The addon `' + options.name + '` is overriding init without calling this._super. ' +
+            'This behaviour is deprecated. ' +
+            'This means that addon\'s writer needs to update it calling `this._super()` and release a new version. ' +
+            'Do not worry, ember-cli is working normally.'
         );
         options.init = forceSuperWithoutApply(options.init);
       } else {
@@ -51,8 +53,11 @@ CoreObject.extend = function(options) {
         // this._super.init && is to make sure that the deprecation message
         // works for people who are writing addons supporting before 2.6.
         deprecation(
-          'Overriding init without calling this._super is deprecated. ' +
-            'Please call `this._super.init && this._super.init.apply(this, arguments);` addon: `' + options.name + '`'
+          'The addon `' + options.name + '` is overriding init without calling this._super. ' +
+            'This behaviour is deprecated. ' +
+            'This means that addon\'s writer needs to update it calling `this._super.init && this._super.init.apply(this, arguments)` ' +
+            'and release a new version. ' +
+            'Do not worry, ember-cli is working normally.'
         );
         options.init = forceSuper(options.init);
       }
