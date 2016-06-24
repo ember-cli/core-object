@@ -70,6 +70,59 @@ describe('core-object.js', function() {
     assert(barCalled);
   });
 
+  it('an extended class can be extended with ES5 property descriptors', function() {
+    var Klass1 = CoreObject.extend({
+      bar: 'bar',
+
+      get foo() {
+        return this.bar;
+      },
+
+      set foo(value) {
+        this.bar = value;
+        return value;
+      }
+    });
+
+    var Klass2 = Klass1.extend({
+      baz: 'baz',
+
+      get foo() {
+        return this.baz;
+      }
+    });
+
+    var Klass3 = Klass1.extend({
+      get foo() {
+        return this.bar + ' and bye!';
+      },
+
+      set foo(value) {
+        return this.bar = value + ' hi';
+      }
+    });
+
+    var obj1 = new Klass1();
+    var obj2 = new Klass2();
+    var obj3 = new Klass3();
+
+    assert(obj1.foo === 'bar');
+    assert(obj2.foo === 'baz');
+    assert(obj3.foo === 'bar and bye!');
+
+    obj1.foo = 'foobar';
+    assert(obj1.foo === 'foobar');
+    assert(obj1.bar === 'foobar');
+
+    obj2.foo = 'foobarbaz';
+    assert(obj2.foo === 'baz');
+    assert(obj2.bar === 'foobarbaz');
+
+    obj3.foo = 'qux';
+    assert(obj3.foo === 'qux hi and bye!');
+    assert(obj3.bar === 'qux hi');
+  });
+
   describe('init', function(){
 
     it('init is called with the arguments to new', function() {
