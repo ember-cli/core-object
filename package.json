@@ -26,7 +26,7 @@
     "browserify": "^13.0.1",
     "klass": "^1.4.0",
     "microtime": "^2.1.1",
-    "mocha": "^2.5.3",
+    "mocha": "^3.0.0",
     "traceur-runtime": "0.0.59",
     "uberproto": "^1.1.2"
   },
