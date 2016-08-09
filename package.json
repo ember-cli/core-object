@@ -3,6 +3,10 @@
   "version": "2.0.5",
   "description": "A lightweight implementation of OOP Class in JavaScript",
   "main": "core-object.js",
+  "files": [
+    "core-object.js",
+    "lib/"
+  ],
   "scripts": {
     "test": "mocha tests/**/*-test.js",
     "test:debug": "mocha debug tests/**/*-test.js",
