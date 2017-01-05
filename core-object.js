@@ -3,10 +3,6 @@
 const assignProperties = require('./lib/assign-properties');
 const deprecation = require('./lib/deprecation');
 
-function needsNew() {
-  throw new TypeError("Failed to construct: Please use the 'new' operator, this object constructor cannot be called as a function.");
-}
-
 class CoreObject {
   constructor() {
     this.init.apply(this, arguments);
