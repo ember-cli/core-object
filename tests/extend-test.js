@@ -63,3 +63,65 @@ describe('extend', function() {
     assert(barCalled);
   });
 });
+
+
+describe('extend ES6', function() {
+  it('can be extended with functions to add to the new class', function() {
+    var called = false;
+
+    class Klass extends CoreObject {
+      foo() {
+        called = true;
+      }
+    };
+
+    var instance = new Klass();
+    instance.foo();
+
+    assert(called);
+  });
+
+  it('can be provided a base object to `new`', function() {
+    var called = false;
+
+    class Klass extends  CoreObject {
+      foo() {
+        called = 'klass.foo';
+      }
+    };
+
+    var instance = new Klass({
+      foo: function() {
+        called = 'instance.foo';
+      }
+    });
+
+    instance.foo();
+
+    assert.equal(called, 'instance.foo');
+  });
+
+  it('an extended class can be extended with functions to add to the new class', function() {
+    var fooCalled = false;
+    var barCalled = false;
+
+    var Klass1 = CoreObject.extend({
+      foo: function() {
+        fooCalled = true;
+      }
+    });
+
+    class Klass2 extends Klass1 {
+      bar() {
+        barCalled = true;
+      }
+    };
+
+    var instance = new Klass2();
+    instance.foo();
+    assert(fooCalled);
+
+    instance.bar();
+    assert(barCalled);
+  });
+});

@@ -253,3 +253,34 @@ describe('_super', function() {
     });
   });
 });
+
+describe('es6 _super interopt', function() {
+  it('chain of super.init is called in the correct order (post-order)', function() {
+    var called = '';
+
+    var Klass1 = CoreObject.extend({
+      init() {
+        this._super.init.call(this);
+        called += '1';
+      }
+    });
+
+    class Klass2 extends Klass1 {
+      init() {
+        super.init();
+        called += '2';
+      }
+    };
+
+    var Klass3 = Klass2.extend({
+      init: function() {
+        this._super.init.call(this);
+        called += '3';
+      }
+    });
+
+    var instance = new Klass3();
+
+    assert.equal(called, '123');
+  });
+})
