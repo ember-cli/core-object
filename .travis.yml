@@ -17,3 +17,12 @@ addons:
 before_install:
   - export CXX=g++-4.8
   - $CXX --version
+
+deploy:
+  provider: npm
+  email: stefan.penner+ember-cli@gmail.com
+  api_key:
+    secure: glmcDFLoo0uafFDyZhyS2tEueUx7QNDgNWCdFcE6G/c22yeHaC5O0dD2G8gw+Ogx+83rmmN3U2dD7waN84PhumUV4x6jzFzNnU86gaU3dZg9/+uSSPlYotLuYUD4NOHgxxinjjH7h/Jw8Tw6np7lxIojO+iRpYnK+E8rDrtImNQ=
+  on:
+    tags: true
+    repo: ember-cli/core-object
