@@ -1,7 +1,7 @@
 'use strict';
 
-var CoreObject = require('../core-object');
-var assert     = require('assert');
+const CoreObject = require('../core-object');
+const assert     = require('assert');
 
 describe('core-object.js', function() {
   it('errors if new is not used', function() {
@@ -12,31 +12,31 @@ describe('core-object.js', function() {
   });
 
   it('can be extended with functions to add to the new class', function() {
-    var called = false;
+    let called = false;
 
-    var Klass = CoreObject.extend({
-      foo: function() {
+    let Klass = CoreObject.extend({
+      foo() {
         called = true;
       }
     });
 
-    var instance = new Klass();
+    let instance = new Klass();
     instance.foo();
 
     assert(called);
   });
 
   it('can be provided a base object to `new`', function() {
-    var called = false;
+    let called = false;
 
-    var Klass = CoreObject.extend({
-      foo: function() {
+    let Klass = CoreObject.extend({
+      foo() {
         called = 'klass.foo';
       }
     });
 
-    var instance = new Klass({
-      foo: function() {
+    let instance = new Klass({
+      foo() {
         called = 'instance.foo';
       }
     });
@@ -47,22 +47,22 @@ describe('core-object.js', function() {
   });
 
   it('an extended class can be extended with functions to add to the new class', function() {
-    var fooCalled = false;
-    var barCalled = false;
+    let fooCalled = false;
+    let barCalled = false;
 
-    var Klass1 = CoreObject.extend({
-      foo: function() {
+    let Klass1 = CoreObject.extend({
+      foo() {
         fooCalled = true;
       }
     });
 
-    var Klass2 = Klass1.extend({
-      bar: function() {
+    let Klass2 = Klass1.extend({
+      bar() {
         barCalled = true;
       }
     });
 
-    var instance = new Klass2();
+    let instance = new Klass2();
     instance.foo();
     assert(fooCalled);
 
@@ -73,31 +73,31 @@ describe('core-object.js', function() {
   describe('init', function(){
 
     it('init is called with the arguments to new', function() {
-      var called = false;
+      let called = false;
 
-      var Klass = CoreObject.extend({
-        init: function(foo) {
+      let Klass = CoreObject.extend({
+        init(foo) {
           called = foo;
         }
       });
 
-      var instance = new Klass('foo');
+      let instance = new Klass('foo');
 
       assert.equal(called, 'foo');
     });
 
     it('init is called once when we instantiate a grandchild class', function() {
-      var called = 0;
+      let called = 0;
 
-      var Klass1 = CoreObject.extend({});
+      let Klass1 = CoreObject.extend({});
 
-      var Klass2 = Klass1.extend({
-        init: function(){
+      let Klass2 = Klass1.extend({
+        init(){
           called += 1;
         }
       });
 
-      var instance = new Klass2();
+      let instance = new Klass2();
 
       assert.equal(called, 1);
     });

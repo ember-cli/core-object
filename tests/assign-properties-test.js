@@ -1,18 +1,20 @@
-var assert = require('assert');
-var assignProperties = require('../lib/assign-properties');
+'use strict';
+
+const assert = require('assert');
+const assignProperties = require('../lib/assign-properties');
 
 describe('assignProperties', function() {
   it('noop', function() {
-    var target = {};
-    var input = {};
+    let target = {};
+    let input = {};
 
     assignProperties(target, input);
     assert.deepEqual(target, input);
   });
 
   it('supports properties that do not conflict', function() {
-    var target = {};
-    var input  = { a: 1, b: 2, c: []};
+    let target = {};
+    let input  = { a: 1, b: 2, c: []};
 
     assignProperties(target, input);
     assert.deepEqual(target, input);
@@ -21,8 +23,8 @@ describe('assignProperties', function() {
   });
 
   it('supports properties that conflict', function() {
-    var target = { a: 2, c: [1]};
-    var input  = { a: 1, b: 2, c: []};
+    let target = { a: 2, c: [1]};
+    let input  = { a: 1, b: 2, c: []};
 
     assignProperties(target, input);
     assert.deepEqual(target, input);
@@ -32,8 +34,8 @@ describe('assignProperties', function() {
 
   describe('super', function() {
     it('normal function', function() {
-      var target = { };
-      var input = { a: function() { } };
+      let target = { };
+      let input = { a() { } };
 
       assignProperties(target, input);
       assert.deepEqual(target, input);
@@ -43,9 +45,9 @@ describe('assignProperties', function() {
     });
 
     it('function with super but no root', function() {
-      var target = { };
-      var input = {
-        a: function() {
+      let target = { };
+      let input = {
+        a() {
           this._super();
           return 5;
         }
@@ -56,9 +58,9 @@ describe('assignProperties', function() {
     });
 
     it('function with super.a but no root', function() {
-      var target = { };
-      var input = {
-        a: function() {
+      let target = { };
+      let input = {
+        a() {
           this._super.a();
           return 5;
         }
