@@ -1,6 +1,7 @@
 'use strict';
 
 const assignProperties = require('./lib/assign-properties');
+const mixin = require('./lib/mixin');
 const deprecation = require('./lib/deprecation');
 
 class CoreObject {
@@ -43,6 +44,10 @@ class CoreObject {
     }
 
     return Class;
+  }
+
+  static mixin(target, mixinObj) {
+    return mixin(target, mixinObj);
   }
 }
 
