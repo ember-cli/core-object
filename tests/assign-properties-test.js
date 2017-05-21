@@ -70,4 +70,113 @@ describe('assignProperties', function() {
       assert.equal(target.a(), 5);
     });
   });
+
+  describe('descriptors', function() {
+    it('copies them', function() {
+      let fooTargetInvoked = 0;
+      let fooInputInvoked = 0;
+
+      let target = {
+        get foo() {
+          fooTargetInvoked++;
+          return 'target';
+        }
+      };
+
+      let input = {
+        get foo() {
+          fooInputInvoked++;
+          return 'input';
+        }
+      };
+
+      assignProperties(target, input);
+      assert.equal(fooTargetInvoked, 0, 'exepcted accessor input.foo to not be accessed');
+      assert.equal(fooInputInvoked, 0, 'exepcted accessor target.foo to not be accessed');
+      assert.equal(target.foo, 'input');
+    });
+
+    it('copies them', function() {
+      let fooTargetInvoked = 0;
+      let fooInputInvoked = 0;
+
+      let target = {
+        get foo() {
+          fooTargetInvoked++;
+          return 'target';
+        }
+      };
+
+      let input = {
+        get foo() {
+          fooInputInvoked++;
+          return 'input';
+        }
+      };
+
+      assignProperties(target, input);
+      assert.equal(fooTargetInvoked, 0, 'exepcted accessor input.foo to not be accessed');
+      assert.equal(fooInputInvoked, 0, 'exepcted accessor target.foo to not be accessed');
+      assert.equal(target.foo, 'input');
+    });
+
+    it('sets super on gets', function() {
+      let fooTargetInvoked = 0;
+      let fooInputInvoked = 0;
+
+      let target = {
+        get foo() {
+          fooTargetInvoked++;
+          return 'target';
+        }
+      };
+
+      let input = {
+        get foo() {
+          fooInputInvoked++;
+          return 'input.' + this._super();
+        }
+      };
+
+      assignProperties(target, input);
+
+      assert.equal(fooTargetInvoked, 0, 'exepcted accessor input.foo to not be accessed');
+      assert.equal(fooInputInvoked, 0, 'exepcted accessor target.foo to not be accessed');
+      assert.equal(target.foo, 'input.target');
+      assert.equal(fooTargetInvoked, 1);
+      assert.equal(fooInputInvoked, 1);
+    });
+
+
+    it('sets super on sets', function() {
+      let fooTargetInvoked = 0;
+      let fooInputInvoked = 0;
+
+      let target = {
+        set foo(value) {
+          fooTargetInvoked++;
+          assert.equal(fooInputInvoked, 1);
+          return value;
+        }
+      };
+
+      let input = {
+        set foo(value) {
+          fooInputInvoked++;
+          assert.equal(fooTargetInvoked, 0);
+          this._super(value);
+          assert.equal(fooTargetInvoked, 1);
+          return value;
+        }
+      };
+
+      assignProperties(target, input);
+
+      assert.equal(fooTargetInvoked, 0, 'exepcted accessor input.foo to not be accessed');
+      assert.equal(fooInputInvoked, 0, 'exepcted accessor target.foo to not be accessed');
+      assert.equal(target.foo = 'apple', 'apple');
+      assert.equal(fooTargetInvoked, 1);
+      assert.equal(fooInputInvoked, 1);
+    });
+  });
 });

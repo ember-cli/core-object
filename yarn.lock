@@ -175,16 +175,16 @@ browserify-zlib@~0.1.2:
   dependencies:
     pako "~0.2.0"
 
-browserify@^13.0.1:
-  version "13.3.0"
-  resolved "https://registry.npmjs.org/browserify/-/browserify-13.3.0.tgz#b5a9c9020243f0c70e4675bec8223bc627e415ce"
+browserify@^14.0.0:
+  version "14.3.0"
+  resolved "https://registry.npmjs.org/browserify/-/browserify-14.3.0.tgz#fd003a2386ac1aec127f097885a3cc6373b745c4"
   dependencies:
     JSONStream "^1.0.3"
     assert "^1.4.0"
     browser-pack "^6.0.1"
     browser-resolve "^1.11.0"
     browserify-zlib "~0.1.2"
-    buffer "^4.1.0"
+    buffer "^5.0.2"
     cached-path-relative "^1.0.0"
     concat-stream "~1.5.1"
     console-browserify "^1.1.0"
@@ -198,7 +198,7 @@ browserify@^13.0.1:
     glob "^7.1.0"
     has "^1.0.0"
     htmlescape "^1.1.0"
-    https-browserify "~0.0.0"
+    https-browserify "^1.0.0"
     inherits "~2.0.1"
     insert-module-globals "^7.0.0"
     labeled-stream-splicer "^2.0.0"
@@ -235,13 +235,12 @@ buffer-xor@^1.0.2:
   version "1.0.3"
   resolved "https://registry.npmjs.org/buffer-xor/-/buffer-xor-1.0.3.tgz#26e61ed1422fb70dd42e6e36729ed51d855fe8d9"
 
-buffer@^4.1.0:
-  version "4.9.1"
-  resolved "https://registry.npmjs.org/buffer/-/buffer-4.9.1.tgz#6d1bb601b07a4efced97094132093027c95bc298"
+buffer@^5.0.2:
+  version "5.0.6"
+  resolved "https://registry.npmjs.org/buffer/-/buffer-5.0.6.tgz#2ea669f7eec0b6eda05b08f8b5ff661b28573588"
   dependencies:
     base64-js "^1.0.2"
     ieee754 "^1.1.4"
-    isarray "^1.0.0"
 
 builtin-status-codes@^2.0.0:
   version "2.0.0"
@@ -496,9 +495,9 @@ htmlescape@^1.1.0:
   version "1.1.1"
   resolved "https://registry.npmjs.org/htmlescape/-/htmlescape-1.1.1.tgz#3a03edc2214bca3b66424a3e7959349509cb0351"
 
-https-browserify@~0.0.0:
-  version "0.0.1"
-  resolved "https://registry.npmjs.org/https-browserify/-/https-browserify-0.0.1.tgz#3f91365cabe60b77ed0ebba24b454e3e09d95a82"
+https-browserify@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
 
 ieee754@^1.1.4:
   version "1.1.8"
@@ -546,13 +545,13 @@ is-buffer@^1.1.0:
   version "1.1.4"
   resolved "https://registry.npmjs.org/is-buffer/-/is-buffer-1.1.4.tgz#cfc86ccd5dc5a52fa80489111c6920c457e2d98b"
 
-isarray@^1.0.0, isarray@~1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
-
 isarray@~0.0.1:
   version "0.0.1"
   resolved "https://registry.npmjs.org/isarray/-/isarray-0.0.1.tgz#8a18acfca9a8f4177e09abfc6038939b05d1eedf"
+
+isarray@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
 
 json-stable-stringify@~0.0.0:
   version "0.0.1"
