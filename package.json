@@ -31,7 +31,7 @@
     "klass": "^1.4.0",
     "mocha": "^5.0.0",
     "traceur-runtime": "0.0.59",
-    "uberproto": "^1.1.2"
+    "uberproto": "^2.0.0"
   },
   "dependencies": {
     "chalk": "^2.0.0"
