@@ -944,9 +944,9 @@ typedarray@^0.0.6, typedarray@~0.0.5:
   version "0.0.6"
   resolved "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-uberproto@^2.0.0:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/uberproto/-/uberproto-2.0.4.tgz#f215bcc227c1b8fd8fccd8d701b9c96dd71ff85d"
+uberproto@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/uberproto/-/uberproto-2.0.5.tgz#63e4458e5ba685eac1df22232edcdfc74ed4a03f"
 
 umd@^3.0.0:
   version "3.0.1"
