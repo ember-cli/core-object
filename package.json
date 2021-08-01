@@ -29,7 +29,7 @@
     "benchmark": "^2.1.0",
     "browserify": "^16.3.0",
     "klass": "^1.4.0",
-    "mocha": "^5.0.0",
+    "mocha": "^9.0.3",
     "traceur-runtime": "0.0.59",
     "uberproto": "^2.0.0"
   },
